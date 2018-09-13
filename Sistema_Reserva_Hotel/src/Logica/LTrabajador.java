@@ -213,4 +213,56 @@ public class LTrabajador {
         }
 
     }
+
+
+
+
+    
+    //---------------------     LOGIN  --------------------- 
+    public DefaultTableModel login(String login, String password) {
+
+        DefaultTableModel modelo;
+
+        String[] titulos = {"ID", "Nombre", "Ape. Paterno", "Ape. materno", "Acceso","Login","Clave","Estado"};//vector para guardar los titulos de las culumnas
+
+        String[] registro = new String[8];//almacenará los registros de c/u de esos titulos
+
+        totalRegistros = 0;
+
+        modelo = new DefaultTableModel(null, titulos);
+
+        //consultando si el usuario y password ingresado por la funcion login existe en la bd y ademas si ese usuario este activado
+        sql = "Select p.idpersona,p.nombre,p.apaterno,p.amaterno,t.acceso,t.login,t.password,t.estado "
+                + "from persona as p inner join trabajador as t on p.idpersona=t.idpersona "
+                + "where t.login = '" + login + "' and t.password = '" + password + "' and t.estado='A'";
+
+        try {
+
+            Statement st = cn.createStatement();
+
+            ResultSet rs = st.executeQuery(sql);
+
+            while (rs.next()) {//recorriendo el rs
+                //almacenandolo en el vector
+                registro[0] = rs.getString("idpersona");
+                registro[1] = rs.getString("nombre");
+                registro[2] = rs.getString("apaterno");
+                registro[3] = rs.getString("amaterno");
+                registro[4] = rs.getString("acceso");
+                registro[5] = rs.getString("login");
+                registro[6] = rs.getString("password");
+                registro[7] = rs.getString("estado");
+
+                totalRegistros += 1;
+                modelo.addRow(registro);//agregando cada fila en el modelo
+            }
+
+            return modelo;
+
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return null;
+        }
+    }
+
 }
