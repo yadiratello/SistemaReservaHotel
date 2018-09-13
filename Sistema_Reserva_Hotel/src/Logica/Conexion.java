@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 public class Conexion {
     
     public String db = "bd_reserva_hotel";
-    public String url = "jdbc:mysql://127.0.0.1/"+db;
+    public String url = "jdbc:mysql://localhost:3308/"+db;
     public String user = "root";
     public String pass = "root";
     
@@ -26,7 +26,7 @@ public class Conexion {
         Connection con = null;
         
         try {
-            Class.forName("org.gjt.mm.mysql.Driver");//cargando el driver de la conexion 
+            Class.forName("com.mysql.jdbc.Driver");//cargando el driver de la conexion 
             
             con = DriverManager.getConnection(this.url, this.user, this.pass);
             
