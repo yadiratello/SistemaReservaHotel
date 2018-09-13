@@ -8,14 +8,14 @@ public class DProducto {
     private String nombre;
     private String descripcion;
     private String unidadMedida;
-    private String precioVenta;
+    private double precioVenta;
     
     
     public DProducto(){
         
     }
 
-    public DProducto(int idproducto, String nombre, String descripcion, String unidadMedida, String precioVenta) {
+    public DProducto(int idproducto, String nombre, String descripcion, String unidadMedida, double precioVenta) {
         this.idproducto = idproducto;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -58,11 +58,11 @@ public class DProducto {
         this.unidadMedida = unidadMedida;
     }
 
-    public String getPrecioVenta() {
+    public double getPrecioVenta() {
         return precioVenta;
     }
 
-    public void setPrecioVenta(String precioVenta) {
+    public void setPrecioVenta(double precioVenta) {
         this.precioVenta = precioVenta;
     }
     
