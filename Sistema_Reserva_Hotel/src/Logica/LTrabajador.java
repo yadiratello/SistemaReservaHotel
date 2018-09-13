@@ -1,10 +1,10 @@
 package Logica;
 
-import Datos.DCliente;
 import Datos.DTrabajador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -78,7 +78,7 @@ public class LTrabajador {
         sql = "insert into persona (nombre,apaterno,amaterno,tipo_documento,num_documento,direccion,telefono,email) values (?,?,?,?,?,?,?,?)";
 
         //insertando a esa persona en la tabla trabajador
-        sql2 = "insert into trabajador(idpersona,sueldo,acceso,login,password,estado) values ((select idpersona from persona order by idpersona desc limit 1),?)";//1er parametro se saca de la ultima persona insertada en la tabla persona y los demas parametros los paso
+        sql2 = "insert into trabajador(idpersona,sueldo,acceso,login,password,estado) values ((select idpersona from persona order by idpersona desc limit 1),?,?,?,?,?)";//1er parametro se saca de la ultima persona insertada en la tabla persona y los demas parametros los paso
 
         try {
 
@@ -118,7 +118,7 @@ public class LTrabajador {
                 return false;
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showConfirmDialog(null, e);
             return false;
         }
