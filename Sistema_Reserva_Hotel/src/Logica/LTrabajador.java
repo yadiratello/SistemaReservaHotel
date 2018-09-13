@@ -131,7 +131,7 @@ public class LTrabajador {
         sql = "update persona set nombre=?, apaterno=?,amaterno=?,tipo_documento=?,num_documento=?, direccion=?, telefono=?, email=? where idpersona=?";
         
         //actualizando la tabla cliente
-        sql2 = "update trabajador set sueldo=?,login=?,acceso=?,password=?,estado=? where idpersona=?";
+        sql2 = "update trabajador set sueldo=?,acceso=?,login=?,password=?,estado=? where idpersona=?";
 
         try {
             PreparedStatement pst = cn.prepareStatement(sql);//tabla persona
