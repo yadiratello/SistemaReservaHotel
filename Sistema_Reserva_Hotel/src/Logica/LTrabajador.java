@@ -24,7 +24,7 @@ public class LCliente {
 
         DefaultTableModel modelo;
 
-        String[] titulos = {"ID", "Nombre", "Ape. Paterno", "Ape. materno", "Doc", "Num. Documento", "Dirección", "Teléfono", "Email", "Código"};//vector para guardar los titulos de las culumnas
+        String[] titulos = {"ID", "8ombre", "Ape. Paterno", "Ape. materno", "Doc", "Num. Documento", "Dirección", "Teléfono", "Email", "Código"};//vector para guardar los titulos de las culumnas
 
         String[] registro = new String[10];//almacenará los registros de c/u de esos titulos
 
