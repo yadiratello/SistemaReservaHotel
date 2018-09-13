@@ -24,7 +24,7 @@ public class LCliente {
 
         DefaultTableModel modelo;
 
-        String[] titulos = {"ID", "Nombre", "Ape. Paterno", "Ape. materno", "Doc", "Num. Documento", "Dirección", "Teléfono", "Email", "Código"};//vector para guardar los titulos de las culumnas
+        String[] titulos = {"ID", "8ombre", "Ape. Paterno", "Ape. materno", "Doc", "Num. Documento", "Dirección", "Teléfono", "Email", "Código"};//vector para guardar los titulos de las culumnas
 
         String[] registro = new String[10];//almacenará los registros de c/u de esos titulos
 
@@ -34,7 +34,7 @@ public class LCliente {
 
         sql = "Select p.idpersona,p.nombre,p.apaterno,p.amaterno,p.tipo_documento,p.num_documento, p.direccion, p.telefono,p.email,c.codigo_cliente "
                 + "from persona as p inner join cliente as c on p.idpersona=c.idpersona "
-                + "where num_documento like '%" + buscar + "%' order by idpersona desc";
+                + "where p.num_documento like '%" + buscar + "%' order by p.idpersona desc";
 
         try {
 
@@ -49,11 +49,11 @@ public class LCliente {
                 registro[2] = rs.getString("apaterno");
                 registro[3] = rs.getString("amaterno");
                 registro[4] = rs.getString("tipo_documento");
-                registro[4] = rs.getString("num_documento");
-                registro[4] = rs.getString("direccion");
-                registro[4] = rs.getString("telefono");
-                registro[4] = rs.getString("email");
-                registro[4] = rs.getString("codigo_cliente");
+                registro[5] = rs.getString("num_documento");
+                registro[6] = rs.getString("direccion");
+                registro[7] = rs.getString("telefono");
+                registro[8] = rs.getString("email");
+                registro[9] = rs.getString("codigo_cliente");
 
                 totalRegistros += 1;
                 modelo.addRow(registro);//agregando cada fila en el modelo
