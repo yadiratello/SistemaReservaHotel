@@ -72,8 +72,7 @@ public class LHabitacion {
     //-------------------   INSERTAR    -----------------------
     public boolean insertar(DHabitacion dts){
         
-        sql = "insert into habitacion(numero,piso,descripcion,caracteristicas,precio_diario,estado,tipo_habitacion) "
-                + " values(?,?,?,?,?,?,?)";
+        sql = "insert into habitacion (numero,piso,descripcion,caracteristicas,precio_diario,estado,tipo_habitacion) values (?,?,?,?,?,?,?)";
         
         try {
             
