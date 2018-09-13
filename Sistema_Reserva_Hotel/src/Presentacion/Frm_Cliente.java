@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
-public class Frm_Cliente extends javax.swing.JFrame {
+public class Frm_Cliente extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Frm_Cliente
@@ -148,9 +148,12 @@ public class Frm_Cliente extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
         lblTotalRegistros = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 153));
+        jPanel3.setBackground(new java.awt.Color(204, 204, 0));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Registro de Clientes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
 
         jLabel4.setText("Nombre:");
@@ -687,16 +690,12 @@ public class Frm_Cliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane3;
@@ -708,13 +707,9 @@ public class Frm_Cliente extends javax.swing.JFrame {
     private javax.swing.JTextField txtCodCliente;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNombre1;
     private javax.swing.JTextField txtNombreCli;
     private javax.swing.JTextField txtNumDoc;
     private javax.swing.JTextField txtTelefono;
     private javax.swing.JTextField txtidPersona;
-    private javax.swing.JTextField txtidProducto;
-    private javax.swing.JTextField txtidProducto1;
     // End of variables declaration//GEN-END:variables
 }
