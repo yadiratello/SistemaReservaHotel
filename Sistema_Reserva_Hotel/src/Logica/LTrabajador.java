@@ -1,6 +1,7 @@
 package Logica;
 
 import Datos.DCliente;
+import Datos.DTrabajador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,7 +9,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class LCliente {
+public class LTrabajador {
 
     private Conexion mysql = new Conexion();
 
@@ -19,21 +20,21 @@ public class LCliente {
 
     public Integer totalRegistros;
 
-    //---------------------     MOSTRARs  --------------------- 
+    //---------------------     MOSTRAR  --------------------- 
     public DefaultTableModel mostrar(String buscar) {
 
         DefaultTableModel modelo;
 
-        String[] titulos = {"ID", "8ombre", "Ape. Paterno", "Ape. materno", "Doc", "Num. Documento", "Dirección", "Teléfono", "Email", "Código"};//vector para guardar los titulos de las culumnas
+        String[] titulos = {"ID", "Nombre", "Ape. Paterno", "Ape. materno", "Doc", "Num. Documento", "Dirección", "Teléfono", "Email", "Sueldo","Acceso","Login","Clave","Estado"};//vector para guardar los titulos de las culumnas
 
-        String[] registro = new String[10];//almacenará los registros de c/u de esos titulos
+        String[] registro = new String[14];//almacenará los registros de c/u de esos titulos
 
         totalRegistros = 0;
 
         modelo = new DefaultTableModel(null, titulos);
 
-        sql = "Select p.idpersona,p.nombre,p.apaterno,p.amaterno,p.tipo_documento,p.num_documento, p.direccion, p.telefono,p.email,c.codigo_cliente "
-                + "from persona as p inner join cliente as c on p.idpersona=c.idpersona "
+        sql = "Select p.idpersona,p.nombre,p.apaterno,p.amaterno,p.tipo_documento,p.num_documento, p.direccion, p.telefono,p.email,t.sueldo,t.acceso,t.login,t.password,t.estado "
+                + "from persona as p inner join trabajador as t on p.idpersona=t.idpersona "
                 + "where p.num_documento like '%" + buscar + "%' order by p.idpersona desc";
 
         try {
@@ -53,7 +54,11 @@ public class LCliente {
                 registro[6] = rs.getString("direccion");
                 registro[7] = rs.getString("telefono");
                 registro[8] = rs.getString("email");
-                registro[9] = rs.getString("codigo_cliente");
+                registro[9] = rs.getString("sueldo");
+                registro[10] = rs.getString("acceso");
+                registro[11] = rs.getString("login");
+                registro[12] = rs.getString("password");
+                registro[13] = rs.getString("estado");
 
                 totalRegistros += 1;
                 modelo.addRow(registro);//agregando cada fila en el modelo
@@ -68,18 +73,19 @@ public class LCliente {
     }
 
     //-------------------   INSERTAR en 2 tablas   -----------------------
-    public boolean insertar(DCliente dts) {
+    public boolean insertar(DTrabajador dts) {
         //insertando en la tabla persona
         sql = "insert into persona (nombre,apaterno,amaterno,tipo_documento,num_documento,direccion,telefono,email) values (?,?,?,?,?,?,?,?)";
 
-        //insertando a esa persona en la tabla cliente
-        sql2 = "insert into cliente(idpersona,codigo_cliente) values ((select idpersona from persona order by idpersona desc limit 1),?)";//1er parametro se saca de la ultima persona insertada en la tabla persona y el 2do parametro sera ingresada por parametro
+        //insertando a esa persona en la tabla trabajador
+        sql2 = "insert into trabajador(idpersona,sueldo,acceso,login,password,estado) values ((select idpersona from persona order by idpersona desc limit 1),?)";//1er parametro se saca de la ultima persona insertada en la tabla persona y los demas parametros los paso
 
         try {
 
             PreparedStatement pst = cn.prepareStatement(sql);
             PreparedStatement pst2 = cn.prepareStatement(sql2);
 
+            //tabla persona
             pst.setString(1, dts.getNombre());
             pst.setString(2, dts.getApaterno());
             pst.setString(3, dts.getAmaterno());
@@ -89,7 +95,12 @@ public class LCliente {
             pst.setString(7, dts.getTelefono());
             pst.setString(8, dts.getEmail());
 
-            pst2.setString(1, dts.getCodigo_cliente());
+            //tabla trabajador
+            pst2.setDouble(1, dts.getSueldo());
+            pst2.setString(2, dts.getAcceso());
+            pst2.setString(3, dts.getLogin());
+            pst2.setString(4, dts.getPassword());
+            pst2.setString(5, dts.getEstado());
 
             int n = pst.executeUpdate();
 
@@ -115,16 +126,16 @@ public class LCliente {
     }
 
     //-------------------   ACTUALIZAR de 2 tablas   -----------------------
-    public boolean editar(DCliente dts) {
+    public boolean editar(DTrabajador dts) {
         //actualizando la tabla persona
         sql = "update persona set nombre=?, apaterno=?,amaterno=?,tipo_documento=?,num_documento=?, direccion=?, telefono=?, email=? where idpersona=?";
         
         //actualizando la tabla cliente
-        sql2 = "update cliente set codigo_cliente=? where idpersona=?";
+        sql2 = "update trabajador set sueldo=?,login=?,acceso=?,password=?,estado=? where idpersona=?";
 
         try {
             PreparedStatement pst = cn.prepareStatement(sql);//tabla persona
-            PreparedStatement pst2 = cn.prepareStatement(sql2);//tabla cliente
+            PreparedStatement pst2 = cn.prepareStatement(sql2);//tabla trabajador
 
             pst.setString(1, dts.getNombre());
             pst.setString(2, dts.getApaterno());
@@ -136,8 +147,12 @@ public class LCliente {
             pst.setString(8, dts.getEmail());
             pst.setInt(9, dts.getIdpersona());
 
-            pst2.setString(1, dts.getCodigo_cliente());
-            pst2.setInt(2, dts.getIdpersona());
+            pst2.setDouble(1, dts.getSueldo());
+            pst2.setString(2, dts.getAcceso());
+            pst2.setString(3, dts.getLogin());
+            pst2.setString(4, dts.getPassword());
+            pst2.setString(5, dts.getEstado());
+            pst2.setInt(6, dts.getIdpersona());
 
             int n = pst.executeUpdate();
 
@@ -162,9 +177,9 @@ public class LCliente {
     }
 
     //-------------------   ELIMINAR    -----------------------
-    public boolean eliminar(DCliente dts) {
+    public boolean eliminar(DTrabajador dts) {
 
-        sql = "delete from cliente where idpersona=?";//eliminando primero d emi tabla persona para despues eliminarlo de la tabla persona
+        sql = "delete from trabajador where idpersona=?";//eliminando primero d emi tabla trabajador para despues eliminarlo de la tabla persona
 
         sql2 = "delete from persona where idpersona=?";//eliminandolo de la tabla persona
         
