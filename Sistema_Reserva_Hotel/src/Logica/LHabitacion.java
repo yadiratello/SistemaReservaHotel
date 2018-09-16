@@ -159,4 +159,108 @@ public class LHabitacion {
         }
         
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //---------------------     BUSCAR habitacion disponible ---------------------   
+     public DefaultTableModel mostrarConsultaHab(String buscar){
+        
+        DefaultTableModel modelo;
+        
+        String[] titulos = {"ID","Número","Piso","Descripción","Características","Precio","Estado","Tipo Habitación"};//vector para guardar los titulos de las culumnas
+        
+        String[] registro = new String[8];//almacenará los registros de c/u de esos titulos
+        
+        totalRegistros=0;
+        
+        modelo = new DefaultTableModel(null, titulos);
+        
+        sql = "Select * from habitacion where piso like '%"+buscar+"%' and estado='Disponible' order by idhabitacion";
+        
+        try {
+            
+            Statement st = cn.createStatement();
+            
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){//recorriendo el rs
+                //almacenandolo en el vector
+                registro[0]=rs.getString("idhabitacion");
+                registro[1]=rs.getString("numero");
+                registro[2]=rs.getString("piso");
+                registro[3]=rs.getString("descripcion");
+                registro[4]=rs.getString("caracteristicas");
+                registro[5]=rs.getString("precio_diario");
+                registro[6]=rs.getString("estado");
+                registro[7]=rs.getString("tipo_habitacion");
+                
+                totalRegistros += 1;
+                modelo.addRow(registro);//agregando cada fila en el modelo
+            }
+            
+            return modelo;
+            
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return null;
+        }
+    }
+    
+     
+    //-------------------   desocupar la habitacion    -----------------------
+    public boolean desocupar(DHabitacion dts){
+        
+        sql="update habitacion set estado='Disponible' where idhabitacion=?";
+        
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            
+            pst.setInt(1, dts.getIdhabitacion());
+            
+            int n = pst.executeUpdate();
+            
+            if(n!=0){//si se ha insertado registros
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return false;
+        }
+    }
+    
+    
+    
+    
+    //-------------------   ocupar la habitacion    -----------------------
+    public boolean ocupar(DHabitacion dts){
+        
+        sql="update habitacion set estado='Ocupado' where idhabitacion=?";
+        
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            
+            pst.setInt(1, dts.getIdhabitacion());
+            
+            int n = pst.executeUpdate();
+            
+            if(n!=0){//si se ha insertado registros
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return false;
+        }
+        
+    }
+    
 }

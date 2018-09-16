@@ -167,7 +167,6 @@ public class Frm_Trabajador extends javax.swing.JInternalFrame {
         btnSalir = new javax.swing.JButton();
         lblTotalRegistros = new javax.swing.JLabel();
 
-        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);

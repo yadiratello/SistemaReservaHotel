@@ -3,9 +3,19 @@ package Presentacion;
 
 
 import Datos.DHabitacion;
+import Logica.Conexion;
 import Logica.LHabitacion;
+import java.io.File;
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 
 public class Frm_Habitacion extends javax.swing.JInternalFrame {
@@ -134,11 +144,9 @@ public class Frm_Habitacion extends javax.swing.JInternalFrame {
         btnEliminar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         lblTotalRegistros = new javax.swing.JLabel();
+        btnReporte = new javax.swing.JButton();
 
-        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setIconifiable(true);
-        setMaximizable(true);
         setResizable(true);
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 22)); // NOI18N
@@ -375,6 +383,15 @@ public class Frm_Habitacion extends javax.swing.JInternalFrame {
 
         lblTotalRegistros.setText("Total Registros:");
 
+        btnReporte.setBackground(new java.awt.Color(51, 51, 51));
+        btnReporte.setForeground(new java.awt.Color(255, 255, 255));
+        btnReporte.setText("Reporte");
+        btnReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -385,12 +402,14 @@ public class Frm_Habitacion extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel9)
                         .addGap(18, 18, 18)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnBuscar)
-                        .addGap(27, 27, 27)
+                        .addGap(18, 18, 18)
                         .addComponent(btnEliminar)
-                        .addGap(27, 27, 27)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnReporte)
+                        .addGap(18, 18, 18)
                         .addComponent(btnSalir))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
@@ -410,7 +429,8 @@ public class Frm_Habitacion extends javax.swing.JInternalFrame {
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar)
                     .addComponent(btnEliminar)
-                    .addComponent(btnSalir))
+                    .addComponent(btnSalir)
+                    .addComponent(btnReporte))
                 .addGap(50, 50, 50)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
@@ -596,6 +616,30 @@ public class Frm_Habitacion extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
+    private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
+        //agregando librerias q me van a permitir visualizar este reporte
+        Map p=new HashMap();
+        JasperReport report;
+        JasperPrint print;
+        
+        try {
+            report=JasperCompileManager.compileReport(new File("").getAbsolutePath()+
+                    "/src/Reportes/rptHabitaciones.jrxml");
+            print=JasperFillManager.fillReport(report, p,connection);
+            JasperViewer view=new JasperViewer(print,false);
+            view.setTitle("Reporte de Habitaciones");
+            view.setVisible(true);            
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnReporteActionPerformed
+
+    
+    
+    //creando instancia
+    private Connection connection = new Conexion().conectar();
+    
     /**
      * @param args the command line arguments
      */
@@ -637,6 +681,7 @@ public class Frm_Habitacion extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnReporte;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cboPiso;
     private javax.swing.JComboBox<String> cboTipoHabitacion;

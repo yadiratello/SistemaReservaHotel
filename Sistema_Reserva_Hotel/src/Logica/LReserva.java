@@ -118,7 +118,8 @@ public class LReserva {
     //-------------------   ACTUALIZAR    -----------------------
     public boolean editar(DReserva dts){
         
-        sql="update producto set idhabitacion=?, idcliente=?, idtrabajador=?,tipo_reserva=?,fecha_reserva=?,fecha_ingresa=?,fecha_salida=?,costo_alojamiento=?,estado=? where idreserva=?";
+        sql="update reserva set idhabitacion=?,idcliente=?,idtrabajador=?,tipo_reserva=?,fecha_reserva=?,fecha_ingresa=?,fecha_salida=?,costo_alojamiento=?,estado=?"+
+               " where idreserva=?";
         
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
@@ -174,4 +175,31 @@ public class LReserva {
         }
         
     }
+    
+    //-------------------   PAGAR RESERVA    -----------------------
+    public boolean pagar (DReserva dts){
+       sql="update reserva set estado='Pagada'"+
+               " where idreserva=?";
+           //alt + 39
+       
+       try {
+           PreparedStatement pst=cn.prepareStatement(sql);
+             
+           
+           pst.setInt(1, dts.getIdreserva());
+           
+           int n=pst.executeUpdate();
+           
+           if (n!=0){
+               return true;
+           }
+           else {
+               return false;
+           }
+           
+       } catch (Exception e) {
+           JOptionPane.showConfirmDialog(null, e);
+           return false;
+       }
+   }
 }
